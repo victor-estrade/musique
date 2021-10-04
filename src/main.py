@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from .partition import Partition
+from .loader import load_situation
 
-from partition import Partition
-from loader import load_situation
 
 def main():
     logger = logging.getLogger(__name__)
