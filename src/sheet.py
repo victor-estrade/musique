@@ -6,7 +6,7 @@ from typing import List
 
 
 class Symbols(Enum):
-    # Sort in priority order !
+    # TODO Sort in priority order !?
     repeat_forward = 1
     forward = 1  # Alias
     repeat_backward = 2
