@@ -50,8 +50,19 @@ def test_sequence_situation_1():
 def test_sequence_situation_2():
     partition = Partition.from_situation(situation_2)
     sequence = partition.measure_sequence()
-    assert sequence == situation_1['measure_sequence']
+    assert sequence == situation_2['measure_sequence']
 
+
+def test_sequence_situation_3():
+    partition = Partition.from_situation(situation_3)
+    sequence = partition.measure_sequence()
+    assert sequence == situation_3['measure_sequence']
+
+
+def test_sequence_situation_4():
+    partition = Partition.from_situation(situation_4)
+    sequence = partition.measure_sequence()
+    assert sequence == situation_4['measure_sequence']
 
 
 # TEST is_valid()
