@@ -17,11 +17,19 @@ situation_8 = load_situation(8)
 # TEST measure_sequence()
 # =======================
 
-def test_sequence_situation_0():
+def test_sequence_simple():
     """ With no reapeat symbols at all """
     partition = Partition(total_number_of_measures=5)
     sequence = partition.measure_sequence()
     answer = [1, 2, 3, 4, 5]
+    assert sequence == answer
+
+
+def test_sequence_backward_01():
+    """ With no reapeat symbols at all """
+    partition = Partition(total_number_of_measures=5, repeat_backward=[4], repeat_forward=[2])
+    sequence = partition.measure_sequence()
+    answer = [1, 2, 3, 4, 2, 3, 4, 5]
     assert sequence == answer
 
 
