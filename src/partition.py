@@ -52,6 +52,14 @@ class Partition():
         """ Returns the list of tocoda position between begin and end """
         return [i for i in self.tocoda if begin < i and i < end]
 
+    def next_ending_two_from(self, position):
+        """ Returns the first repeat_forward position previous to given position """
+        return min([i for i in self.ending_two if i > position])
+
+    def next_coda_from(self, position):
+        """ Returns the first repeat_forward position previous to given position """
+        return min([i for i in self.coda if i > position])
+
 
     def measure_sequence(self):
         partition = copy.deepcopy(self)
@@ -77,7 +85,7 @@ class Partition():
                 ending_one_candidates = partition.find_ending_one_between(previous_forward, current)
                 if ending_one_candidates:
                     jump_start = ending_one_candidates[0]
-                    jump_stop = min([i for i in partition.ending_two if i > jump_start])
+                    jump_stop = partition.next_ending_two_from(jump_start)
                     print(f"found jump inside repeat at {jump_start} going to {jump_stop}")
                     jumps[jump_start] = jump_stop
                 current = previous_forward
@@ -98,7 +106,7 @@ class Partition():
                 tocoda_candidates = partition.find_tocoda_between(previous_segno, current)
                 if tocoda_candidates:
                     jump_start = tocoda_candidates[0]
-                    jump_stop = min([i for i in partition.coda if i > jump_start])
+                    jump_stop = partition.next_coda_from(jump_start)
                     print(f"found jump inside dalsegno at {jump_start} going to {jump_stop}")
                     jumps[jump_start] = jump_stop
                 current = previous_segno
@@ -112,7 +120,7 @@ class Partition():
                 tocoda_candidates = partition.find_tocoda_between(1, current)
                 if tocoda_candidates:
                     jump_start = tocoda_candidates[0]
-                    jump_stop = min([i for i in partition.coda if i > jump_start])
+                    jump_stop = partition.next_coda_from(jump_start)
                     print(f"found jump inside dalsegno at {jump_start} going to {jump_stop}")
                     jumps[jump_start] = jump_stop
                 current = 1
