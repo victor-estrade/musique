@@ -68,13 +68,12 @@ class Partition():
             safety += 1
             sequence.append(current)
             print(f"iter = {safety}, sequence = {sequence}")
-            # Find next mesure to add to the sequence
+
             # Case 1 : if we reach an unused backward
             if next_backward is not None and next_backward == current:
                 print(f"found backward repeat {current}, sequence = {sequence}")
                 previous_forward = partition.previous_forward_from(current)
                 print(f"found forward repeat {previous_forward}, sequence = {sequence}")
-                # Find ending_ones to memorize jumps
                 ending_one_candidates = partition.find_ending_one_between(previous_forward, current)
                 if ending_one_candidates:
                     jump_start = ending_one_candidates[0]
@@ -96,7 +95,6 @@ class Partition():
                 print(f"found dal segno {current}, sequence = {sequence}")
                 previous_segno = max([i for i in partition.segno if i < current])
                 print(f"found segno {previous_segno}, sequence = {sequence}")
-                # Find coda to memorize jumps
                 tocoda_candidates = partition.find_tocoda_between(previous_segno, current)
                 if tocoda_candidates:
                     jump_start = tocoda_candidates[0]
@@ -111,7 +109,6 @@ class Partition():
             # Case 4 : if we reah a da capo
             if next_dacapo is not None and next_dacapo == current:
                 print(f"found da capo {next_dacapo}, sequence = {sequence}")
-                # Find coda to memorize jumps
                 tocoda_candidates = partition.find_tocoda_between(1, current)
                 if tocoda_candidates:
                     jump_start = tocoda_candidates[0]
