@@ -26,10 +26,18 @@ def test_sequence_simple():
 
 
 def test_sequence_backward_01():
-    """ With no reapeat symbols at all """
+    """ With a single repeat backward """
     partition = Partition(total_number_of_measures=5, repeat_backward=[4], repeat_forward=[2])
     sequence = partition.measure_sequence()
     answer = [1, 2, 3, 4, 2, 3, 4, 5]
+    assert sequence == answer
+
+
+def test_sequence_backward_02():
+    """ With 2 repeat backward """
+    partition = Partition(total_number_of_measures=8, repeat_backward=[4, 7], repeat_forward=[2, 6])
+    sequence = partition.measure_sequence()
+    answer = [1, 2, 3, 4, 2, 3, 4, 5, 6, 7, 6, 7, 8]
     assert sequence == answer
 
 
