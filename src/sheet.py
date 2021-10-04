@@ -6,6 +6,7 @@ from typing import List
 
 
 class Symbols(Enum):
+    # Sort in priority order !
     repeat_forward = 1
     forward = 1  # Alias
     repeat_backward = 2
@@ -84,13 +85,41 @@ class Sheet():
         for position in coda_positions:
             self.mesures[position].append(Symbols.coda)
 
-
+    def get(self, position : int) -> List[Symbols]:
+        """ Get the mesure content at given position """
+        # Simple accessor ... Should it be able to read and write ?
+        return self.mesures[position]
 
 
 @dataclass
 class SheetReader():
+    current_position : int = 1
     repeat_forward_stack : List[int] = field(default_factory=list)
     segno_stack : List[int] = field(default_factory=list)
 
     def read(self, sheet : Sheet) -> List[int]:
+        safety = 1
+        safety_stop = 100_000
+        end = sheet.length
+        sequence = []
+        while self.current_position <= end and safety < safety_stop:
+            safety += 1
+            sequence.append(self.current_position)
+            current_mesure = sheet.get(self.current_position)
+            self.handle(current_mesure)
+
         return list(range(1, sheet.length+1))
+
+
+    def handle(self, current_mesure):
+        symbols = sorted(current_mesure)
+        for symbol in current_mesure:
+            break_flag = self.consume(symbol)
+            if break_flag:
+                break
+
+    def consume(self, symbol):
+        pass
+
+    def consume_repeat_forward(self):
+        pass
