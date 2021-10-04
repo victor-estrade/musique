@@ -13,6 +13,7 @@ def main():
     print(sit_1)
     part_1 = Partition.from_situation(sit_1)
     print(part_1)
+    print(part_1.__repr__())
 
 
 
