@@ -3,7 +3,7 @@ import os
 import logging
 import json
 
-from pathfinder import DATA_DIR
+from .pathfinder import DATA_DIR
 
 def load_situation(i:int):
     fname = os.path.join(DATA_DIR, f"situation{i}.json")
