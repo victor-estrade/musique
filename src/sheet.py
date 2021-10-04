@@ -93,9 +93,11 @@ class Sheet():
 
 @dataclass
 class SheetReader():
+    """ Visitor to read a sheet to produce the complete sequence of mesures to play """
     current_position : int = 1
     repeat_forward_stack : List[int] = field(default_factory=list)
     segno_stack : List[int] = field(default_factory=list)
+    
 
     def read(self, sheet : Sheet) -> List[int]:
         safety = 1
@@ -123,3 +125,12 @@ class SheetReader():
 
     def consume_repeat_forward(self):
         pass
+
+
+@dataclass
+class SheetValidator():
+    """ Visitor to read a sheet and check for syntax errors. """
+    current_position : int = 1
+
+    def is_valid(self, sheet):
+        return True

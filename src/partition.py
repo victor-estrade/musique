@@ -71,7 +71,7 @@ class Partition():
         next_dacapo = partition.first_dacapo()
         end = self.total_number_of_measures
         sequence = []
-        jumps = {}
+        jumps = {}  # Forward jumps -> ending and coda founds during repeats and dalsegno
         while current <= end and safety < safety_stop:
             safety += 1
             sequence.append(current)
