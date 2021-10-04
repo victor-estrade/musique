@@ -37,9 +37,10 @@ def test_load_situation_1():
     		2,
     		3,
     		4,
-    		3,
     		5,
     		6,
+    		3,
+    		4,
     		7,
     		8
     	]
