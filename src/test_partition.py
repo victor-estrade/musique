@@ -34,7 +34,7 @@ def test_sequence_backward_01():
 
 
 def test_sequence_backward_02():
-    """ With 2 repeat backward """
+    """ With 2 distinct repeat backward """
     partition = Partition(total_number_of_measures=8, repeat_backward=[4, 7], repeat_forward=[2, 6])
     sequence = partition.measure_sequence()
     answer = [1, 2, 3, 4, 2, 3, 4, 5, 6, 7, 6, 7, 8]
