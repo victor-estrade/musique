@@ -45,6 +45,7 @@ class Partition():
                 previous_forward = max([i for i in partition.repeat_forward if i < current])
                 print(f"found forward repeat {previous_forward}, sequence = {sequence}")
                 current = previous_forward
+                # Find ending_ones to memorize jumps
                 ending_one_candidates = [i for i in partition.ending_one
                                             if i < next_backward and i > previous_forward]
                 if ending_one_candidates:
@@ -58,6 +59,41 @@ class Partition():
             if current in jumps:
                 current = jumps[current]
                 continue
+
+            # Case 3 : if we reach a dal segno
+            next_dalsegno = next(iter(partition.dalsegno), None)
+            if next_dalsegno is not None and next_dalsegno == current:
+                print(f"found dal segno {next_dalsegno}, sequence = {sequence}")
+                partition.dalsegno.remove(next_dalsegno)
+                previous_segno = max([i for i in partition.segno if i < current])
+                print(f"found segno {previous_segno}, sequence = {sequence}")
+                current = previous_segno
+                # Find coda to memorize jumps
+                tocoda_candidates = [i for i in partition.tocoda
+                                            if i < next_dalsegno and i > previous_segno]
+                if tocoda_candidates:
+                    jump_start = tocoda_candidates[0]
+                    jump_stop = min([i for i in partition.coda if i > jump_start])
+                    print(f"found jump inside dalsegno at {jump_start} going to {jump_stop}")
+                    jumps[jump_start] = jump_stop
+                continue
+
+            # Case 4 : if we reah a da capo
+            next_dacapo = next(iter(partition.dacapo), None)
+            if next_dacapo is not None and next_dacapo == current:
+                print(f"found da capo {next_dacapo}, sequence = {sequence}")
+                partition.dacapo.remove(next_dacapo)
+                current = 1
+                # Find coda to memorize jumps
+                tocoda_candidates = [i for i in partition.tocoda
+                                            if i < next_dacapo]
+                if tocoda_candidates:
+                    jump_start = tocoda_candidates[0]
+                    jump_stop = min([i for i in partition.coda if i > jump_start])
+                    print(f"found jump inside dalsegno at {jump_start} going to {jump_stop}")
+                    jumps[jump_start] = jump_stop
+                continue
+
             # Case 5 : else simply read next one
             current += 1
 
