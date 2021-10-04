@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import copy
+
 from dataclasses import dataclass
 from dataclasses import field
 from typing import List
@@ -21,8 +23,28 @@ class Partition():
         total_number_of_measures = situation['total_number_of_measures']
         return Partition(total_number_of_measures=total_number_of_measures, **lists)
 
+
     def measure_sequence(self):
-        return list(range(1, self.total_number_of_measures + 1))
+        partition = copy.deepcopy(self)
+        safety = 1
+        safety_stop = 100000
+        current = 1
+        end = self.total_number_of_measures
+        sequence = []
+        while current <= end and safety < safety_stop:
+            safety += 1
+            sequence.append(current)
+            next_backward = next(iter(partition.repeat_backward), None)
+            if next_backward is not None and next_backward == current:
+                print(f"found backward repeat {next_backward}, sequence = {sequence}")
+                partition.repeat_backward.remove(next_backward)
+                previous_forward = max([i for i in partition.repeat_forward if i < current])
+                print(f"found forward repeat {previous_forward}, sequence = {sequence}")
+                current = previous_forward
+                continue
+            current += 1
+
+        return sequence
 
     def is_valid(self):
         return True
